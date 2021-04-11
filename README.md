@@ -1,6 +1,6 @@
 #BattleSite-Home
 ## Commands
-#### `yarn`
+#### `yarn install`
 > Installs package dependencies
 
 #### `yarn dev`
