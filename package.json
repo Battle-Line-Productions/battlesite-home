@@ -1,5 +1,5 @@
 {
-  "name": "@battlelineproductions/battlesite-home",
+  "name": "@battle-line-productions/battlesite-home",
   "version": "1.2.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "domain": "npx env-cmd -e prod sls create_domain",
-    "deploy": "env-cmd -e prod sls deploy --stage prod"
+    "deploy": "env-cmd -e prod sls deploy --stage prod --verbose"
   },
   "dependencies": {
     "@nuxtjs/google-gtag": "^1.0.4",
