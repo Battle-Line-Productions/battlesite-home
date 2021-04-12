@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   // global theme for the app
   globalTheme: 'dark', // light | dark
 

@@ -50,7 +50,7 @@ export default {
           name: 'Luke',
           tag: 'LawlessFighter',
           title: 'Co-Founder & Senior Game Designer',
-          image: '/images/team/luke.jpeg',
+          image: '/images/team/luke.jpg',
           twitter: '#',
           github: '#',
           linkedin: '#'
@@ -66,8 +66,9 @@ export default {
         },
         {
           name: 'Danny',
+          tag: 'DannyFlowers',
           title: '2D Art Director',
-          image: '/images/team/placeholder.jpeg',
+          image: '/images/team/danny.jpg',
           twitter: '#',
           github: '#',
           linkedin: '#'

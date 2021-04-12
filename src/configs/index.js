@@ -1,8 +1,8 @@
-import icons from './icons'
-import theme from './theme'
-import analytics from './analytics'
+const icons = require('./icons');
+const theme = require('./theme');
+const analytics = require('./analytics');
 
-export default {
+module.exports = {
   // product display information
   product: {
     name: 'Battleline Productions',

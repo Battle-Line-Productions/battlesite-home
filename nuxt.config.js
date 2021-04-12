@@ -1,10 +1,11 @@
-import config from './src/configs'
+const config = require('./src/configs');
 
 const { gaId } = config.analytics
 
-export default {
+module.exports = {
   // ssr: false,
-  // target: 'static',
+  target: 'server',
+  telemetry: false,
   srcDir: 'src/',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -67,5 +68,6 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    publicPath: process.env.SERVERLESS_NUXT_PUBLIC_PATH
   }
 }

@@ -1,0 +1,127 @@
+service: battlesite-home
+frameworkVersion: ^2.35.0"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-2
+  stage: ${opt:stage, 'dev'}
+  profile: ${opt:profile, 'blptest'}
+  lambdaHashingVersion: '20201221'
+  environment:
+    NODE_ENV: ${env:NODE_ENV}
+
+plugins:
+  - serverless-nuxt-plugin
+  - serverless-apigw-binary
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: ${env:DOMAIN_NAME}
+  apigwBinary:
+    types:
+      - 'image/*'
+  nuxt:
+    version: v${file(./package.json):version}
+    bucketName: battle-line-productions-${self:provider.stage},
+    cdnPath: https://${env:ASSETS_DOMAIN_NAME}
+
+resources:
+  Resources:
+    AssetsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.nuxt.bucketName}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedMethods:
+              - GET
+              - HEAD
+              AllowedOrigins:
+              - https://${env:DOMAIN_NAME}
+    RedirectBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${env:REDIRECT_DOMAIN_NAME}
+        WebsiteConfiguration:
+          RedirectAllRequestsTo:
+            HostName: ${env:DOMAIN_NAME}
+            Protocol: https
+    RedirectRoute53ARecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
+        Name: ${env:REDIRECT_DOMAIN_NAME}
+        Type: A
+        AliasTarget:
+          DNSName: http://www.battlelineproductions.com.s3-website.us-east-2.amazonaws.com/
+          HostedZoneId: Z075584225FDBNT9EDT7R
+          EvaluateTargetHealth: false
+    RedirectRoute53AAAARecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
+        Name: ${env:REDIRECT_DOMAIN_NAME}
+        Type: AAAA
+        AliasTarget:
+          DNSName: http://www.battlelineproductions.com.s3-website.us-east-2.amazonaws.com/
+          HostedZoneId: Z075584225FDBNT9EDT7R
+          EvaluateTargetHealth: false
+    AssetsCloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Enabled: true
+          Aliases:
+            - ${env:ASSETS_DOMAIN_NAME}
+          Origins:
+            - DomainName: !GetAtt AssetsBucket.DomainName
+              Id: AssetsBucket
+              CustomOriginConfig:
+                OriginProtocolPolicy: match-viewer
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - DELETE
+              - GET
+              - HEAD
+              - OPTIONS
+              - PATCH
+              - POST
+              - PUT
+            TargetOriginId: AssetsBucket
+            ForwardedValues:
+              QueryString: false
+            ViewerProtocolPolicy: allow-all
+          IPV6Enabled: true
+          ViewerCertificate:
+            AcmCertificateArn: ${env:ASSETS_ACM_ARN}
+            SslSupportMethod: sni-only
+    AssetsRoute53ARecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
+        Name: ${env:ASSETS_DOMAIN_NAME}
+        Type: A
+        AliasTarget:
+          DNSName: !GetAtt AssetsCloudFrontDistribution.DomainName
+          HostedZoneId: Z2FDTNDATAQYW2
+    AssetsRoute53AAAARecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
+        Name: ${env:ASSETS_DOMAIN_NAME}
+        Type: AAAA
+        AliasTarget:
+          DNSName: !GetAtt AssetsCloudFrontDistribution.DomainName
+          HostedZoneId: Z2FDTNDATAQYW2
+
+functions:
+  nuxt:
+    memorySize: 2048
+    timeout: 30
+    handler: handler.render
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+

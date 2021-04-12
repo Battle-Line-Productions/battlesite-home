@@ -1,6 +1,6 @@
-import theme from '@/configs/theme.js'
+const theme = require('@/configs/theme.js');
 
-export default {
+module.exports = {
   rtl: theme.isRTL,
   theme: {
     dark: theme.globalTheme === 'dark',
