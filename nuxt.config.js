@@ -1,13 +1,12 @@
 const config = require('./src/configs');
-
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const { gaId } = config.analytics
 
 module.exports = {
-  // ssr: false,
   target: 'server',
   telemetry: false,
   srcDir: 'src/',
-  // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s',
     title: 'Battleline Productions',
@@ -22,15 +21,10 @@ module.exports = {
       ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
     ]
   },
-
-  // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     '~/assets/scss/theme.scss'
   ],
-
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    // filters
     { src: '~/filters/capitalize.js' },
     { src: '~/filters/lowercase.js' },
     { src: '~/filters/uppercase.js' },
@@ -38,13 +32,8 @@ module.exports = {
     { src: '~/filters/placeholder.js' },
     { src: '~/filters/formatDate.js' }
   ],
-
-  // Auto import components (https://go.nuxtjs.dev/config-components)
-  // components: true,
-
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+  components: true,
   buildModules: [
-    // https://go.nuxtjs.dev/vuetify
     ['@nuxtjs/vuetify', {
       customVariables: ['~/assets/scss/vuetify/variables/_index.scss'],
       optionsPath: '~/configs/vuetify.js',
@@ -54,20 +43,25 @@ module.exports = {
       }
     }]
   ],
-
-  // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxtjs/google-gtag'
   ],
-
   'google-gtag': {
     id: gaId,
-    debug: true, // enable to track in dev mode
-    disableAutoPageTrack: false // disable if you don't want to track each page route with router.afterEach(...).
+    debug: true,
+    disableAutoPageTrack: false
   },
-
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
+  srcDir: './src',
+  serverMiddleware: [
+    bodyParser.json(),
+    bodyParser.urlencoded({ extended: true }),
+    cookieParser(),
+  ],
   build: {
-    publicPath: process.env.SERVERLESS_NUXT_PUBLIC_PATH
+    standalone: true,
+  },
+  render: {
+    etag: false,
+    compressor: { threshold: Infinity },
   }
 }

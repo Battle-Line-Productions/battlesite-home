@@ -3,31 +3,42 @@
   "version": "1.2.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "node ./server.js",
     "build": "nuxt build",
-    "start": "nuxt start",
+    "start": "NODE_ENV=production node ./.nuxt/dist/server.js",
     "generate": "nuxt generate",
-    "domain": "npx env-cmd -e prod sls create_domain",
-    "deploy": "env-cmd -e prod sls deploy --stage prod --verbose"
+    "domain": "NODE_ENV=production sls create_domain",
+    "deploy": "sls deploy --stage prod",
+    "undeploy": "NODE_ENV=production sls remove --stage prod"
   },
   "dependencies": {
     "@nuxtjs/google-gtag": "^1.0.4",
     "date-fns": "^2.20.1",
-    "lodash": "^4.17.21",
-    "nuxt-start": "^2.15.4",
-    "serverless-nuxt": "^1.1.1"
+    "nuxt": "^2.15.4"
   },
   "devDependencies": {
     "@indielayer/eslint-config-vue": "^2.1.2",
     "@nuxtjs/vuetify": "^1.11.3",
+    "aws-serverless-express": "^3.4.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "env-cmd": "^10.1.0",
     "eslint": "^7.24.0",
-    "nuxt": "^2.15.4",
+    "express": "^4.17.1",
+    "express-asyncify": "^1.0.1",
+    "lodash": "^4.17.21",
+    "node-sass": "^5.0.0",
+    "nuxt-property-decorator": "^2.9.1",
     "sass": "^1.32.8",
     "sass-loader": "10.1.1",
     "serverless": "^2.35.0",
     "serverless-apigw-binary": "^0.4.4",
     "serverless-domain-manager": "^5.1.0",
-    "serverless-nuxt-plugin": "^1.3.0"
+    "serverless-dotenv-plugin": "^3.9.0",
+    "serverless-nuxt-plugin": "^1.3.0",
+    "serverless-s3-sync": "^1.17.0",
+    "vue": "^2.6.12",
+    "vuex": "^3.6.2"
   }
 }

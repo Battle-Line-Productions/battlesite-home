@@ -4,124 +4,165 @@ frameworkVersion: ^2.35.0"
 provider:
   name: aws
   runtime: nodejs12.x
-  region: us-east-2
+  region: us-east-1
   stage: ${opt:stage, 'dev'}
   profile: ${opt:profile, 'blptest'}
   lambdaHashingVersion: '20201221'
   environment:
-    NODE_ENV: ${env:NODE_ENV}
+    NODE_ENV: production
 
 plugins:
-  - serverless-nuxt-plugin
+  - serverless-s3-sync
   - serverless-apigw-binary
-  - serverless-domain-manager
+  - serverless-dotenv-plugin
+
+package:
+  individually: true
+  excludeDevDependencies: true
 
 custom:
-  customDomain:
-    domainName: ${env:DOMAIN_NAME}
+  stackId: 2512561497
+  buckets:
+    ASSETS_BUCKET_NAME: ${self:service}-${self:custom.stackId}-${self:provider.stage}-assets
+    STATIC_BUCKET_NAME: ${self:service}-${self:custom.stackId}-${self:provider.stage}-static
+  s3Sync:
+    - bucketName: ${self:custom.buckets.ASSETS_BUCKET_NAME}
+      localDir: .nuxt/dist/client
+    - bucketName: ${self:custom.buckets.STATIC_BUCKET_NAME}
+      localDir: src/static
   apigwBinary:
     types:
-      - 'image/*'
-  nuxt:
-    version: v${file(./package.json):version}
-    bucketName: battle-line-productions-${self:provider.stage},
-    cdnPath: https://${env:ASSETS_DOMAIN_NAME}
+      - '*/*'
 
 resources:
   Resources:
-    AssetsBucket:
+    ClientAssetsBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.nuxt.bucketName}
+        BucketName: ${self:custom.buckets.ASSETS_BUCKET_NAME}
         CorsConfiguration:
           CorsRules:
-            - AllowedMethods:
-              - GET
-              - HEAD
+            -
               AllowedOrigins:
-              - https://${env:DOMAIN_NAME}
-    RedirectBucket:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - HEAD
+                - PUT
+                - POST
+                - DELETE
+              MaxAge: 3000
+              ExposedHeaders:
+                - x-amz-server-side-encryption
+                - x-amz-request-id
+                - x-amz-id-2
+    ClientAssetsBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: ClientAssetsBucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement: [
+            {
+              Action: ['s3:GetObject'],
+              Effect: 'Allow',
+              Resource: {
+                Fn::Join: ['', ['arn:aws:s3:::', { Ref: 'ClientAssetsBucket' }, '/*']],
+              },
+              Principal: '*'
+            },
+          ]
+    ClientStaticBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${env:REDIRECT_DOMAIN_NAME}
-        WebsiteConfiguration:
-          RedirectAllRequestsTo:
-            HostName: ${env:DOMAIN_NAME}
-            Protocol: https
-    RedirectRoute53ARecord:
-      Type: AWS::Route53::RecordSet
+        BucketName: ${self:custom.buckets.STATIC_BUCKET_NAME}
+        CorsConfiguration:
+          CorsRules:
+            -
+              AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - HEAD
+                - PUT
+                - POST
+                - DELETE
+              MaxAge: 3000
+              ExposedHeaders:
+                - x-amz-server-side-encryption
+                - x-amz-request-id
+                - x-amz-id-2
+    ClientStaticBucketPolicy:
+      Type: AWS::S3::BucketPolicy
       Properties:
-        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
-        Name: ${env:REDIRECT_DOMAIN_NAME}
-        Type: A
-        AliasTarget:
-          DNSName: http://www.battlelineproductions.com.s3-website.us-east-2.amazonaws.com/
-          HostedZoneId: Z075584225FDBNT9EDT7R
-          EvaluateTargetHealth: false
-    RedirectRoute53AAAARecord:
-      Type: AWS::Route53::RecordSet
-      Properties:
-        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
-        Name: ${env:REDIRECT_DOMAIN_NAME}
-        Type: AAAA
-        AliasTarget:
-          DNSName: http://www.battlelineproductions.com.s3-website.us-east-2.amazonaws.com/
-          HostedZoneId: Z075584225FDBNT9EDT7R
-          EvaluateTargetHealth: false
-    AssetsCloudFrontDistribution:
-      Type: AWS::CloudFront::Distribution
-      Properties:
-        DistributionConfig:
-          Enabled: true
-          Aliases:
-            - ${env:ASSETS_DOMAIN_NAME}
-          Origins:
-            - DomainName: !GetAtt AssetsBucket.DomainName
-              Id: AssetsBucket
-              CustomOriginConfig:
-                OriginProtocolPolicy: match-viewer
-          DefaultCacheBehavior:
-            AllowedMethods:
-              - DELETE
-              - GET
-              - HEAD
-              - OPTIONS
-              - PATCH
-              - POST
-              - PUT
-            TargetOriginId: AssetsBucket
-            ForwardedValues:
-              QueryString: false
-            ViewerProtocolPolicy: allow-all
-          IPV6Enabled: true
-          ViewerCertificate:
-            AcmCertificateArn: ${env:ASSETS_ACM_ARN}
-            SslSupportMethod: sni-only
-    AssetsRoute53ARecord:
-      Type: AWS::Route53::RecordSet
-      Properties:
-        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
-        Name: ${env:ASSETS_DOMAIN_NAME}
-        Type: A
-        AliasTarget:
-          DNSName: !GetAtt AssetsCloudFrontDistribution.DomainName
-          HostedZoneId: Z2FDTNDATAQYW2
-    AssetsRoute53AAAARecord:
-      Type: AWS::Route53::RecordSet
-      Properties:
-        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
-        Name: ${env:ASSETS_DOMAIN_NAME}
-        Type: AAAA
-        AliasTarget:
-          DNSName: !GetAtt AssetsCloudFrontDistribution.DomainName
-          HostedZoneId: Z2FDTNDATAQYW2
+        Bucket:
+          Ref: ClientStaticBucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement: [
+            {
+              Action: ['s3:GetObject'],
+              Effect: 'Allow',
+              Resource: {
+                Fn::Join: ['', ['arn:aws:s3:::', { Ref: 'ClientStaticBucket' }, '/*']],
+              },
+              Principal: '*'
+            },
+          ]
 
 functions:
-  nuxt:
+  renderer:
+    name: ${self:service}-${self:custom.stackId}-${self:provider.stage}-renderer
+    handler: .nuxt/dist/serverless.handler
     memorySize: 2048
     timeout: 30
-    handler: handler.render
+    environment:
+      NODE_ENV: production
+    package:
+      include:
+        - .nuxt/dist/serverless.js
+        - .nuxt/dist/server/**
+      exclude:
+        - .nuxt/**
+        - src/**
+        - app.js
+        - nuxt.config.js
+        - nuxt.d.ts
+        - README.md
+        - server.js
+        - serverless.js
+        - serverless.yml
+        - tsconfig.json
+        - tslint.json
+        - webpack.config.js
+        - yarn-error.log
     events:
-      - http: ANY /
-      - http: ANY /{proxy+}
-
+      - http:
+          path: /
+          method: any
+      - http:
+          path: /{proxy+}
+          method: any
+      - http:
+          path: /_nuxt/{proxy+}
+          method: any
+          integration: http-proxy
+          request:
+            uri: https://${self:custom.buckets.ASSETS_BUCKET_NAME}.s3.${self:provider.region}.amazonaws.com/{proxy}
+            parameters:
+              paths:
+                proxy: true
+      - http:
+          path: /static/{proxy+}
+          method: any
+          integration: http-proxy
+          request:
+            uri: https://${self:custom.buckets.STATIC_BUCKET_NAME}.s3.${self:provider.region}.amazonaws.com/{proxy}
+            parameters:
+              paths:
+                proxy: true
