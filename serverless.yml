@@ -1,10 +1,10 @@
-service: battlesite-home
+service: battle-site-home
 frameworkVersion: ^2.35.0"
 
 provider:
   name: aws
   runtime: nodejs12.x
-  region: us-east-2
+  region: us-east-1
   stage: ${opt:stage, 'dev'}
   profile: ${opt:profile, 'blptest'}
   lambdaHashingVersion: '20201221'
@@ -24,7 +24,7 @@ custom:
       - 'image/*'
   nuxt:
     version: v${file(./package.json):version}
-    bucketName: battle-line-productions-${self:provider.stage},
+    bucketName: battle-line-productions-${self:provider.stage}-v2
     cdnPath: https://${env:ASSETS_DOMAIN_NAME}
 
 resources:
@@ -40,34 +40,24 @@ resources:
               - HEAD
               AllowedOrigins:
               - https://${env:DOMAIN_NAME}
-    RedirectBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${env:REDIRECT_DOMAIN_NAME}
-        WebsiteConfiguration:
-          RedirectAllRequestsTo:
-            HostName: ${env:DOMAIN_NAME}
-            Protocol: https
-    RedirectRoute53ARecord:
-      Type: AWS::Route53::RecordSet
-      Properties:
-        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
-        Name: ${env:REDIRECT_DOMAIN_NAME}
-        Type: A
-        AliasTarget:
-          DNSName: http://www.battlelineproductions.com.s3-website.us-east-2.amazonaws.com/
-          HostedZoneId: Z075584225FDBNT9EDT7R
-          EvaluateTargetHealth: false
-    RedirectRoute53AAAARecord:
-      Type: AWS::Route53::RecordSet
-      Properties:
-        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
-        Name: ${env:REDIRECT_DOMAIN_NAME}
-        Type: AAAA
-        AliasTarget:
-          DNSName: http://www.battlelineproductions.com.s3-website.us-east-2.amazonaws.com/
-          HostedZoneId: Z075584225FDBNT9EDT7R
-          EvaluateTargetHealth: false
+    # RedirectBucket:
+    #   Type: AWS::S3::Bucket
+    #   Properties:
+    #     BucketName: ${env:REDIRECT_DOMAIN_NAME}
+    #     WebsiteConfiguration:
+    #       RedirectAllRequestsTo:
+    #         HostName: ${env:DOMAIN_NAME}
+    #         Protocol: https
+    # RedirectRoute53ARecord:
+    #   Type: AWS::Route53::RecordSet
+    #   Properties:
+    #     HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
+    #     Name: ${env:REDIRECT_DOMAIN_NAME}
+    #     Type: A
+    #     AliasTarget:
+    #       DNSName: s3-website.us-east-2.amazonaws.com
+    #       HostedZoneId: Z075584225FDBNT9EDT7R
+    #       EvaluateTargetHealth: false
     AssetsCloudFrontDistribution:
       Type: AWS::CloudFront::Distribution
       Properties:

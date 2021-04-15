@@ -40,7 +40,7 @@ export default {
         description: 'We strive for our users to come together and work and play together. Join your Discord or forums and say Hi!!'
       }, {
         icon: 'mdi-clock-outline',
-        title: 'SASS Options',
+        title: 'SaaS Options',
         description: 'We offer services to help make your development experiences better. Come see what we offer and how we can help you!'
       }]
     }
