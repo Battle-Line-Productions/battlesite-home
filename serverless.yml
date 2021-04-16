@@ -66,24 +66,24 @@ resources:
                 CanonicalUser:
                   'Fn::GetAtt':
                     [AssetsUIOriginAccessIdentity, S3CanonicalUserId]
-    # RedirectBucket:
-    #   Type: AWS::S3::Bucket
-    #   Properties:
-    #     BucketName: ${env:REDIRECT_DOMAIN_NAME}
-    #     WebsiteConfiguration:
-    #       RedirectAllRequestsTo:
-    #         HostName: ${env:DOMAIN_NAME}
-    #         Protocol: https
-    # RedirectRoute53ARecord:
-    #   Type: AWS::Route53::RecordSet
-    #   Properties:
-    #     HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
-    #     Name: ${env:REDIRECT_DOMAIN_NAME}
-    #     Type: A
-    #     AliasTarget:
-    #       DNSName: s3-website.us-east-2.amazonaws.com
-    #       HostedZoneId: Z075584225FDBNT9EDT7R
-    #       EvaluateTargetHealth: false
+    RedirectBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${env:REDIRECT_DOMAIN_NAME}
+        WebsiteConfiguration:
+          RedirectAllRequestsTo:
+            HostName: ${env:DOMAIN_NAME}
+            Protocol: https
+    RedirectRoute53ARecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
+        Name: ${env:REDIRECT_DOMAIN_NAME}
+        Type: A
+        AliasTarget:
+          DNSName: s3-website.us-east-2.amazonaws.com
+          HostedZoneId: Z075584225FDBNT9EDT7R
+          EvaluateTargetHealth: false
     AssetsUIOriginAccessIdentity:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
       Properties:
@@ -104,8 +104,9 @@ resources:
           Aliases:
             - ${env:ASSETS_DOMAIN_NAME}
           Origins:
-            - DomainName: 'Fn::GetAtt': [AssetsBucket, DomainName]
-              Id: AssetsBucket
+            - Id: AssetsBucket
+              DomainName:
+                'Fn::GetAtt': [AssetsBucket, DomainName]
               S3OriginConfig:
                 OriginAccessIdentity:
                   'Fn::Join':
@@ -129,7 +130,6 @@ resources:
               Cookies:
                 Forward: all
             ViewerProtocolPolicy: redirect-to-https
-            IPV6Enabled: true
           ViewerCertificate:
             AcmCertificateArn: ${env:ASSETS_ACM_ARN}
             SslSupportMethod: sni-only

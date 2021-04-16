@@ -27,19 +27,19 @@ export default {
   data() {
     return {
       features: [{
-        icon: 'mdi-account-check-outline',
+        icon: 'mdi-arm-flex',
         title: 'Amazing Software',
         description: 'We focus on writing software to make the average consumers life easier and help you keep your stuff together.'
       }, {
-        icon: 'mdi-lifebuoy',
+        icon: 'mdi-cake',
         title: 'Fun Games',
         description: 'We produce video games that are super fun but still challenging. Play by yourself or with your friends.'
       }, {
-        icon: 'mdi-email-open-multiple-outline',
+        icon: 'mdi-account-group',
         title: 'Awesome Community',
         description: 'We strive for our users to come together and work and play together. Join your Discord or forums and say Hi!!'
       }, {
-        icon: 'mdi-clock-outline',
+        icon: 'mdi-cog-outline',
         title: 'SaaS Options',
         description: 'We offer services to help make your development experiences better. Come see what we offer and how we can help you!'
       }]
