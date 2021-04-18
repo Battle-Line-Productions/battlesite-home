@@ -20,7 +20,7 @@
           class="text-center"
         >
           <v-avatar size="220">
-            <v-img :src="item.image"></v-img>
+            <v-img :src="require(`~/assets${item.image}`)"></v-img>
           </v-avatar>
 
           <div class="text-h5 mt-3">{{ item.name }}</div>
