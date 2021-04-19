@@ -1,6 +1,11 @@
 <template>
   <v-container class="py-6 py-lg-12">
-    <h1 class="text-h4 text-sm-h3 text-md-h2 text-lg-h1">Battleline Productions</h1>
+    <v-row>
+      <v-col cols="12" md="6" lg="7">
+        <v-img :max-width="$vuetify.breakpoint.mdAndUp ? '75%' : '100%'" :src="require('@/assets/images/logos/battle_logo.png')"></v-img>
+      </v-col>
+    </v-row>
+    <!-- <h1 class="text-h4 text-sm-h3 text-md-h2 text-lg-h1">Battleline Productions</h1> -->
     <h1 class="text-h4 text-sm-h3 text-md-h2 text-lg-h1 primary--text">The Front Line in Applications and Games</h1>
     <h2 class="text-h6 text-sm-h5 secondary--text mt-4">We produce awesome software to move the average person forward and amazing games to drive the mind of our community.</h2>
     <h2 class="text-h6 font-weight-bold secondary--text mt-8">We are almost ready! If you want to get notified when our games and software goes live, subscribe to our mailing list!</h2>
