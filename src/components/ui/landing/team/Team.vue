@@ -20,7 +20,7 @@
           class="text-center"
         >
           <v-avatar size="220">
-            <v-img :src="require(`~/assets${item.image}`)"></v-img>
+            <v-img :src="require(`@/assets/images/team/${item.image}.jpg`)"></v-img>
           </v-avatar>
 
           <div class="text-h5 mt-3">{{ item.name }}</div>
@@ -41,7 +41,7 @@ export default {
           name: 'Mike',
           tag: 'Funkel',
           title: 'Co-Founder & Senior Software Engineer',
-          image: '/images/team/mike.jpg',
+          image: 'mike',
           twitter: '#',
           github: '#',
           linkedin: '#'
@@ -50,7 +50,7 @@ export default {
           name: 'Luke',
           tag: 'LawlessFighter',
           title: 'Co-Founder & Senior Game Designer',
-          image: '/images/team/luke.jpg',
+          image: 'luke',
           twitter: '#',
           github: '#',
           linkedin: '#'
@@ -59,7 +59,7 @@ export default {
           name: 'Elliot',
           tag: 'Golem',
           title: 'Co-Founder & Senior Software Engineer',
-          image: '/images/team/elliot.jpeg',
+          image: 'elliot',
           twitter: '#',
           github: '#',
           linkedin: '#'
@@ -68,7 +68,7 @@ export default {
           name: 'Danny',
           tag: 'DannyFlowers',
           title: '2D Art Director',
-          image: '/images/team/danny.jpg',
+          image: 'danny',
           twitter: '#',
           github: '#',
           linkedin: '#'
