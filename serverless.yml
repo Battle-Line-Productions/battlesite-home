@@ -74,16 +74,16 @@ resources:
           RedirectAllRequestsTo:
             HostName: ${env:DOMAIN_NAME}
             Protocol: https
-    RedirectRoute53ARecord:
-      Type: AWS::Route53::RecordSet
-      Properties:
-        HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
-        Name: ${env:REDIRECT_DOMAIN_NAME}
-        Type: A
-        AliasTarget:
-          DNSName: s3-website.us-east-2.amazonaws.com
-          HostedZoneId: Z075584225FDBNT9EDT7R
-          EvaluateTargetHealth: false
+    # RedirectRoute53ARecord:
+    #   Type: AWS::Route53::RecordSet
+    #   Properties:
+    #     HostedZoneName: ${env:DOMAIN_HOSTED_ZONE}
+    #     Name: ${env:REDIRECT_DOMAIN_NAME}
+    #     Type: A
+    #     AliasTarget:
+    #       DNSName: s3-website.us-east-2.amazonaws.com
+    #       HostedZoneId: Z075584225FDBNT9EDT7R
+    #       EvaluateTargetHealth: false
     AssetsUIOriginAccessIdentity:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
       Properties:
