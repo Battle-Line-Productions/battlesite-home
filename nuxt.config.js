@@ -36,7 +36,8 @@ module.exports = {
     { src: '~/filters/uppercase.js' },
     { src: '~/filters/trim.js' },
     { src: '~/filters/placeholder.js' },
-    { src: '~/filters/formatDate.js' }
+    { src: '~/filters/formatDate.js' },
+    { src: '~/plugins/vee-validate.js', ssr: false }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
