@@ -4,23 +4,26 @@
       <Toolbar />
       <router-view class="py-2 fill-height"></router-view>
       <Footer />
+      <Snackbar />
     </v-container>
   </v-layout>
 </template>
 
 <script>
-import Toolbar from '@/components/ui/landing/toolbar/Toolbar.vue'
-import Footer from '@/components/ui/landing/footer/Footer.vue'
+import Toolbar from "@/components/ui/landing/toolbar/Toolbar.vue";
+import Footer from "@/components/ui/landing/footer/Footer.vue";
+import Snackbar from "@/components/ui/popups/snackbar.vue";
 
 export default {
   components: {
     Toolbar,
-    Footer
+    Footer,
+    Snackbar
   },
   data() {
-    return {}
+    return {};
   }
-}
+};
 </script>
 
 <style lang="scss">

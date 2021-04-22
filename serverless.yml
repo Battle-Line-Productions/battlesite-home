@@ -29,7 +29,7 @@ custom:
     types:
       - 'image/*'
   nuxt:
-    version: v${file(./package.json):version}
+    version: v1
     bucketName: battle-line-productions-${self:provider.stage}-v2
     cdnPath: https://${env:ASSETS_DOMAIN_NAME}
 

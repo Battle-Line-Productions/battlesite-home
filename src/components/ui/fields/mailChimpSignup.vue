@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-form>
-      <validation-observer
-        v-slot="{ invalid }"
-        ref="subscribe"
-      >
+      <validation-observer v-slot="{ invalid }" ref="subscribe">
         <v-row>
           <v-col cols="12" sm="8" md="8" lg="7">
             <VTextFieldWithValidation
@@ -57,12 +54,15 @@ export default {
       const formData = { ...this.form };
       try {
         const { data, status } = await axios.post("/api/subscribe", formData);
-        this.response.status = status;
-        this.response.message = `Thanks, ${data.email_address} is subscribed!`;
+        this.$notifier.showMessage({
+          content: `Thanks, ${data.email_address} is subscribed!`,
+          color: "success"
+        });
         this.form = { ...this.cachedForm };
         this.$refs.subscribe.reset();
       } catch (e) {
-        console.log(e);
+        this.$notifier.showMessage({ content: e, color: "danger" });
+        console.log(JSON.stringify(e));
       }
     }
   },

@@ -41,7 +41,8 @@ module.exports = {
     { src: '~/filters/trim.js' },
     { src: '~/filters/placeholder.js' },
     { src: '~/filters/formatDate.js' },
-    { src: '~/plugins/vee-validate.js', ssr: false }
+    { src: "~/plugins/notifier.js" },
+    { src: '~/plugins/vee-validate.js', ssr: false },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
