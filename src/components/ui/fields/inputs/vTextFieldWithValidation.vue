@@ -11,6 +11,8 @@
       :success="valid"
       v-bind="$attrs"
       v-on="$listeners"
+      outlined
+      solo
     ></v-text-field>
   </ValidationProvider>
 </template>

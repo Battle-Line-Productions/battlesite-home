@@ -1,41 +1,45 @@
 <template>
   <div>
-    <validation-observer
-      v-slot="{ invalid }"
-      ref="subscribe"
-      tag="form"
-      @submit.prevent="!invalid && subscribe()"
-    >
-      <validation-provider
-        rules="required|email"
-        :bails="false"
-        tag="div"
-        name="email"
-        v-slot="{ errors }"
+    <v-form>
+      <validation-observer
+        v-slot="{ invalid }"
+        ref="subscribe"
       >
-        <v-text-field
-          outlined
-          solo
-          label="Email"
-          height="64"
-          v-model="form.email"
-          placeholder="Email"
-        ></v-text-field>
-        <ul class="list-disc list-inside text-red-500 m-2" v-if="errors.length">
-          <li class="leading-none" v-for="error in errors" :key="error">
-            <small>{{ error }}</small>
-          </li>
-        </ul>
-      </validation-provider>
-      <v-btn :disabled="invalid" x-large color="secondary">Subscribe</v-btn>
-    </validation-observer>
+        <v-row>
+          <v-col cols="12" sm="8" md="8" lg="7">
+            <VTextFieldWithValidation
+              v-model="form.email"
+              rules="required|email"
+              label="Email"
+            />
+          </v-col>
+          <v-col cols="12" sm="2" md="2">
+            <v-btn
+              class="mt-1"
+              :disabled="invalid"
+              color="secondary"
+              large
+              @click.prevent="!invalid && subscribe()"
+              >Subscribe</v-btn
+            >
+          </v-col>
+        </v-row>
+      </validation-observer>
+    </v-form>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 
+import { ValidationObserver } from "vee-validate";
+import VTextFieldWithValidation from "@/components/ui/fields/inputs/VTextFieldWithValidation";
+
 export default {
+  components: {
+    ValidationObserver,
+    VTextFieldWithValidation
+  },
   data() {
     return {
       form: {
@@ -49,7 +53,7 @@ export default {
     };
   },
   methods: {
-    async subscribe(event) {
+    async subscribe() {
       const formData = { ...this.form };
       try {
         const { data, status } = await axios.post("/api/subscribe", formData);

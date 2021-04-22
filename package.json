@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "npx env-cmd -e local nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
