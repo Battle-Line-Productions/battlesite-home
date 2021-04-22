@@ -16,7 +16,7 @@
       We are almost ready! If you want to get notified when our games and
       software goes live, subscribe to our mailing list!
     </h2>
-    <validation-observer
+    <!-- <validation-observer
       v-slot="{ invalid }"
       ref="subscribe"
       tag="form"
@@ -59,42 +59,19 @@
           >
         </div>
       </div>
-    </validation-observer>
+    </validation-observer> -->
+    <Chimp />
+
   </v-container>
 </template>
 
 <script>
-import axios from 'axios'
+import Chimp from '@/components/ui/fields/mailChimpSignup.vue';
 
 export default {
-  data() {
-    return {
-      form: {
-        email: ""
-      },
-      response: {
-        status: null,
-        message: ""
-      },
-      cachedForm: {}
-    };
-  },
-  methods: {
-    async subscribe(event){
-      const formData = {...this.form}
-      try{
-        const {data, status} = await axios.post('/api/subscribe', formData)
-        this.response.status = status
-        this.response.message = `Thanks, ${data.email_address} is subscribed!`
-        this.form = {...this.cachedForm}
-        this.$refs.subscribe.reset()
-      }catch(e){
-        console.log(e)
-      }
-    }
-  },
-  mounted() {
-    this.cachedForm = { ...this.form };
+  components: {
+    Chimp
   }
+
 };
 </script>

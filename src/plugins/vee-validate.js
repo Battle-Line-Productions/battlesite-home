@@ -1,6 +1,5 @@
-import Vue from "vue";
-import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
-import { required, email } from 'vee-validate/dist/rules';
+import { extend } from "vee-validate";
+import { required, email, alpha } from 'vee-validate/dist/rules';
 
 extend("required", {
   ...required,
@@ -9,5 +8,7 @@ extend("required", {
 
 extend("email", email);
 
-Vue.component("ValidationProvider", ValidationProvider);
-Vue.component("ValidationObserver", ValidationObserver);
+extend("alpha", {
+  ...alpha,
+  message: "This field must only contain alphabetic characters"
+});

@@ -69,6 +69,7 @@ module.exports = {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    transpile: ["vee-validate/dist/rules"],
     publicPath: process.env.SERVERLESS_NUXT_PUBLIC_PATH
   }
 }
