@@ -31,8 +31,8 @@
 
     <v-app-bar app height="80">
       <v-container class="py-0 px-0 px-sm-2 fill-height" :fluid="isFluid">
-        <router-link to="#" class="d-flex align-center text-decoration-none mr-2">
-          <img src="/images/v-logo-small.png" alt="" height="48" class="mr-1">
+        <router-link to="/" class="d-flex align-center text-decoration-none mr-2">
+          <img :src="require('@/assets/images/logos/battle_logo_small.png')" alt="" height="48" class="mr-1">
           <span class="font-weight-black text-uppercase">
             Battleline
           </span>

@@ -1,9 +1,11 @@
 import express from "express";
 import Mailchimp from "mailchimp-api-v3";
 
-const apiKey = process.env.MAILCHIMP_API_KEY;
-const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
-const mailchimp = new Mailchimp(apiKey);
+console.log(JSON.stringify(process.env, null, 2));
+
+const mailChimpApiKey = process.env.MAILCHIMP_API_KEY;
+const mailChimpAudienceId = process.env.MAILCHIMP_AUDIENCE_ID;
+const mailchimp = new Mailchimp(mailChimpApiKey);
 
 const app = express();
 app.use(express.json());
@@ -13,16 +15,19 @@ app.post("/subscribe", async (req, res) => {
   try {
     const response = await mailchimp.request({
       method: "post",
-      path: `/lists/${audienceId}/members`,
+      path: `/lists/${mailChimpAudienceId}/members`,
       body: {
         email_address,
         status: "subscribed"
       }
     });
+    console.log(`Response: ${response}`);
     const { _links, ...result } = response;
+    console.log(`Status: ${result.statusCode}; Result: ${result}`);
     res.status(result.statusCode).json(result);
   } catch (err) {
-    res.status(err.status).send(err.detail);
+    console.error(`Status: ${err.status}; Message: ${err.detail}; Stack: ${err}`);
+    res.status(err.status).send({message: err.detail});
   }
 });
 

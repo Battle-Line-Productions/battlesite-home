@@ -61,8 +61,10 @@ export default {
         this.form = { ...this.cachedForm };
         this.$refs.subscribe.reset();
       } catch (e) {
-        this.$notifier.showMessage({ content: e, color: "danger" });
-        console.log(JSON.stringify(e));
+        this.$notifier.showMessage({
+          content: `You have already subscribed! Thanks!!`,
+          color: "danger"
+        });
       }
     }
   },
