@@ -11,7 +11,7 @@
         <div class="mt-6">
           <v-text-field label="Email" outlined solo></v-text-field>
           <v-textarea label="Message" outlined solo></v-textarea>
-          <v-btn submit x-large color="secondary" min-width="180">Send</v-btn>
+          <v-btn disabled submit x-large color="secondary" min-width="180">Send</v-btn>
         </div>
       </v-card>
     </v-responsive>
