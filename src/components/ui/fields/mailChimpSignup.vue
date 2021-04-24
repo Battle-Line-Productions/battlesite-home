@@ -30,7 +30,7 @@
 import axios from "axios";
 
 import { ValidationObserver } from "vee-validate";
-import VTextFieldWithValidation from "~/components/ui/fields/inputs/VTextFieldWithValidation";
+import VTextFieldWithValidation from "./inputs/vTextFieldWithValidation";
 
 export default {
   components: {
