@@ -9,7 +9,7 @@
     "generate": "nuxt generate",
     "domain": "npx env-cmd -e prod sls create_domain",
     "undomain": "npx env-cmd -e prod sls remove_domain",
-    "deploy": "npx env-cmd -e prod sls deploy --force --stage prod --verbose",
+    "deploy": "npx env-cmd -e prod sls deploy --force --stage prod --verbose --profile blptest",
     "remove": "sls remove --stage prod"
   },
   "dependencies": {

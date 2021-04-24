@@ -6,7 +6,7 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   stage: ${opt:stage, 'dev'}
-  profile: ${opt:profile, 'blptest'}
+  profile: ${opt:profile}
   lambdaHashingVersion: '20201221'
   environment:
     NODE_ENV: ${env:NODE_ENV}
