@@ -21,8 +21,7 @@ jobs:
     - run: yarn install
     - name: Install SLS Plugins and Deploy
       uses: serverless/github-action@master
-      with:
-        args: -c "yarn install --also=dev && yarn list -g && yarn list && yarn deploy"
+    - run: yarn deploy
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
