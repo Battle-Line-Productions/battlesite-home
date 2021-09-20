@@ -23,7 +23,7 @@
     "mailchimp-api-v3": "^1.15.0",
     "nuxt-start": "^2.15.4",
     "serverless-nuxt": "^1.1.1",
-    "vee-validate": "^3.4.5",
+    "vee-validate": "^3.4.12",
     "vuetify": "^2.4.9"
   },
   "devDependencies": {
