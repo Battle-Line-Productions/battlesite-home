@@ -24,7 +24,7 @@
     "nuxt-start": "^2.15.4",
     "serverless-nuxt": "^1.1.1",
     "vee-validate": "^3.4.5",
-    "vuetify": "^2.4.9"
+    "vuetify": "^2.5.8"
   },
   "devDependencies": {
     "@indielayer/eslint-config-vue": "^2.1.2",
