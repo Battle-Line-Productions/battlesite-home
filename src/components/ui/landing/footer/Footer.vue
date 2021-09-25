@@ -18,8 +18,8 @@
       </div> -->
       <div class="d-flex flex-column flex-sm-row align-center justify-center mt-4 overline">
         <div class="secondary--text">© Battleline Productions 2021</div>
-        <router-link to="#" class="text-decoration-none ml-sm-2 secondary--text text--lighten-3">Privacy Policy</router-link>
-        <router-link to="#" class="text-decoration-none ml-sm-2 secondary--text text--lighten-3">Terms of Service</router-link>
+        <router-link to="/privacypolicy" class="text-decoration-none ml-sm-2 secondary--text text--lighten-3">Privacy Policy</router-link>
+        <router-link to="/termsofservice" class="text-decoration-none ml-sm-2 secondary--text text--lighten-3">Terms of Service</router-link>
       </div>
     </v-container>
   </v-footer>
