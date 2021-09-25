@@ -20,6 +20,16 @@ export default {
     CallToAction,
     Feature,
     Team
+  },
+  mounted() {
+        this.$cookies.modal = true;
   }
 }
 </script>
+
+<style scoped>
+.center-me {
+  align-items: center;
+  justify-content: center;
+}
+</style>

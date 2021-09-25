@@ -6,6 +6,7 @@
       <Footer />
       <Snackbar />
     </v-container>
+    <CookieControl />
   </v-layout>
 </template>
 
@@ -18,11 +19,11 @@ export default {
   components: {
     Toolbar,
     Footer,
-    Snackbar
+    Snackbar,
   },
   data() {
     return {};
-  }
+  },
 };
 </script>
 

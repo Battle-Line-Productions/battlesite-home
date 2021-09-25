@@ -3,11 +3,9 @@ const config = require('./src/configs');
 const { gaId } = config.analytics
 
 module.exports = {
-  // ssr: false,
   target: 'server',
   telemetry: false,
   srcDir: 'src/',
-  // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s',
     title: 'Battleline Productions',
@@ -22,19 +20,13 @@ module.exports = {
       ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
     ]
   },
-
-  // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     '~/assets/scss/theme.scss'
   ],
-
   serverMiddleware: [
     { path: '/api', handler: '~/api/index.js' }
   ],
-
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    // filters
     { src: '~/filters/capitalize.js' },
     { src: '~/filters/lowercase.js' },
     { src: '~/filters/uppercase.js' },
@@ -44,13 +36,8 @@ module.exports = {
     { src: "~/plugins/notifier.js" },
     { src: '~/plugins/vee-validate.js', ssr: false },
   ],
-
-  // Auto import components (https://go.nuxtjs.dev/config-components)
-  // components: true,
-
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+  components: true,
   buildModules: [
-    // https://go.nuxtjs.dev/vuetify
     ['@nuxtjs/vuetify', {
       customVariables: ['~/assets/scss/vuetify/variables/_index.scss'],
       optionsPath: '~/configs/vuetify.js',
@@ -60,21 +47,27 @@ module.exports = {
       }
     }]
   ],
-
-  // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
-    '@nuxtjs/google-gtag'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/google-gtag'    
   ],
-
   'google-gtag': {
     id: gaId,
     debug: true, // enable to track in dev mode
     disableAutoPageTrack: false // disable if you don't want to track each page route with router.afterEach(...).
   },
-
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     transpile: ["vee-validate/dist/rules"],
     publicPath: process.env.SERVERLESS_NUXT_PUBLIC_PATH
+  },
+  auth: {
+    strategies: {
+      auth0: {
+        domain: process.env.AUTH_DOMAIN,
+        clientId: process.env.AUTH_CLIENT_ID,
+        audience: process.env.AUTH_AUDIENCE
+      }
+    }
   }
 }

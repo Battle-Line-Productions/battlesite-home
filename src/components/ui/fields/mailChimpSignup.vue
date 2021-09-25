@@ -2,7 +2,7 @@
   <div>
     <v-form>
       <validation-observer v-slot="{ invalid }" ref="subscribe">
-        <v-row>
+        <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="8" lg="7">
             <VTextFieldWithValidation
               v-model="form.email"
@@ -12,7 +12,7 @@
           </v-col>
           <v-col cols="12" sm="2" md="2">
             <v-btn
-              class="mt-1"
+              class="mb-3"
               :disabled="invalid"
               color="secondary"
               large
