@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-row align="center" justify="center">
+        <v-row class="mt-n10" align="center" justify="center">
           <v-col cols="12" md="6" lg="7">
             <v-img
               :src="require('@/assets/images/logos/battle_logo.png')"
