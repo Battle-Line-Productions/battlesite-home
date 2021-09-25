@@ -6,11 +6,11 @@
           <v-col cols="12" md="6" lg="7">
             <v-img
               :src="require('@/assets/images/logos/battle_logo.png')"
-              alt="BattleLine Productions"
+              alt="Battleline Productions"
             ></v-img>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row class="mt-n8">
           <v-col>
             <h1 class="text-h4 text-sm-h3 text-md-h2 text-lg-h1 primary--text text-center">
               The Front Line in Applications and Games
@@ -21,7 +21,7 @@
             </h2>
             <h2 class="text-h6 font-weight-bold secondary--text mt-8 text-center">
               We are almost ready! If you want to get notified when our games
-              and software goes live, subscribe to our mailing list!
+              and software is live, subscribe to our mailing list!
             </h2>
             <Chimp />
           </v-col>
