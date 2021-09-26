@@ -20,9 +20,6 @@ export default {
     CallToAction,
     Feature,
     Team
-  },
-  mounted() {
-        this.$cookies.modal = true;
   }
 }
 </script>

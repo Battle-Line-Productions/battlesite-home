@@ -6,7 +6,6 @@
       <Footer />
       <Snackbar />
     </v-container>
-    <CookieControl />
   </v-layout>
 </template>
 

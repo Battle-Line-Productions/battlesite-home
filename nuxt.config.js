@@ -34,7 +34,7 @@ module.exports = {
     { src: '~/filters/placeholder.js' },
     { src: '~/filters/formatDate.js' },
     { src: "~/plugins/notifier.js" },
-    { src: '~/plugins/vee-validate.js', ssr: false },
+    { src: '~/plugins/vee-validate.js', ssr: false }
   ],
   components: true,
   buildModules: [
@@ -62,11 +62,22 @@ module.exports = {
     publicPath: process.env.SERVERLESS_NUXT_PUBLIC_PATH
   },
   auth: {
+    redirect: {
+      callback: "/",
+      home: "/",
+      login: "/login",
+      logout: "/"
+    },
+    localStorage: false,
     strategies: {
       auth0: {
-        domain: process.env.AUTH_DOMAIN,
-        clientId: process.env.AUTH_CLIENT_ID,
-        audience: process.env.AUTH_AUDIENCE
+        domain: process.env.AUTH_DOMAIN | 'https://dev-v6i7rzbv.us.auth0.com/',
+        clientId: process.env.AUTH_CLIENT_ID | 'xqoH8Q39tT9vNvthCYHp1dhB7y3wbkYz',
+        scope: ['openid', 'profile', 'offline_access'],
+        accessType: 'offline',
+        responseType: 'code',
+        grantType: 'authorization_code',
+        codeChallengeMethod: 'S256',
       }
     }
   }
