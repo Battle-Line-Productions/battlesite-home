@@ -3,6 +3,7 @@ const config = require('./src/configs');
 const { gaId } = config.analytics
 
 module.exports = {
+  mode: 'universal',
   target: 'server',
   telemetry: false,
   srcDir: 'src/',
@@ -50,7 +51,7 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/google-gtag'    
+    '@nuxtjs/google-gtag'
   ],
   'google-gtag': {
     id: gaId,
@@ -62,17 +63,12 @@ module.exports = {
     publicPath: process.env.SERVERLESS_NUXT_PUBLIC_PATH
   },
   auth: {
-    redirect: {
-      callback: "/",
-      home: "/",
-      login: "/login",
-      logout: "/"
-    },
     localStorage: false,
     strategies: {
+      local: false,
       auth0: {
-        domain: process.env.AUTH_DOMAIN | 'https://dev-v6i7rzbv.us.auth0.com/',
-        clientId: process.env.AUTH_CLIENT_ID | 'xqoH8Q39tT9vNvthCYHp1dhB7y3wbkYz',
+        domain: 'dev-v6i7rzbv.us.auth0.com',
+        clientId: 'xqoH8Q39tT9vNvthCYHp1dhB7y3wbkYz',
         scope: ['openid', 'profile', 'offline_access'],
         accessType: 'offline',
         responseType: 'code',

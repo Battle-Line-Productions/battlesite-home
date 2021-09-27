@@ -19,7 +19,7 @@
       <template v-slot:append>
         <div class="pa-2">
           <v-btn
-            v-if="!$auth.isAuthenticated"
+            v-if="!$auth.loggedIn"
             block
             class="mb-2"
             @click="login()"
@@ -29,15 +29,14 @@
           <v-btn v-else block class="mb-2"> Profile </v-btn>
 
           <v-btn
-            v-if="!$auth.isAuthenticated"
-            disabled
+            v-if="!$auth.loggedIn"
             block
             class="primary"
             @click="login"
           >
             Sign Up
           </v-btn>
-          <v-btn v-else disabled block class="primary" @click="logout">
+          <v-btn v-else block class="primary" @click="logout">
             Logout
           </v-btn>
         </div>
@@ -79,7 +78,7 @@
         <v-spacer></v-spacer>
 
         <v-btn
-          v-if="!$auth.isAuthenticated"
+          v-if="!$auth.loggedIn"
           large
           text
           class="mx-1 d-none d-sm-inline-block"
@@ -91,7 +90,7 @@
           Profile
         </v-btn>
         <v-btn
-          v-if="!$auth.isAuthenticated"
+          v-if="!$auth.loggedIn"
           large
           color="primary"
           @click="login()"
