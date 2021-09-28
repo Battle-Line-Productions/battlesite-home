@@ -12,8 +12,8 @@ provider:
     NODE_ENV: ${env:NODE_ENV}
     MAILCHIMP_API_KEY: ${env:MAILCHIMP_API_KEY}
     MAILCHIMP_AUDIENCE_ID: ${env:MAILCHIMP_AUDIENCE_ID}
-    AUTH_CLIENT_ID: xqoH8Q39tT9vNvthCYHp1dhB7y3wbkYz
-    AUTH_DOMAIN: https://dev-v6i7rzbv.us.auth0.com/
+    AUTH_CLIENT_ID: A5HaTA3NxmEZmNTdSzUVJqNN4P6zfURc
+    AUTH_DOMAIN: https://dev-v6i7rzbv.us.auth0.com
   iamRoleStatements:
     - Effect: 'Allow'
       Action:

@@ -68,7 +68,7 @@ module.exports = {
       local: false,
       auth0: {
         domain: 'dev-v6i7rzbv.us.auth0.com',
-        clientId: 'xqoH8Q39tT9vNvthCYHp1dhB7y3wbkYz',
+        clientId: 'A5HaTA3NxmEZmNTdSzUVJqNN4P6zfURc',
         scope: ['openid', 'profile', 'offline_access'],
         accessType: 'offline',
         responseType: 'code',
