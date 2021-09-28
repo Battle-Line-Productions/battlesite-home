@@ -1,6 +1,6 @@
 export const menu = [
   {
-    title: 'Products',
+    title: 'Software',
     link: '#products',
     disabled: true
   }, 
@@ -8,7 +8,12 @@ export const menu = [
     title: 'Games',
     link: '#games',
     disabled: true
-  }, 
+  },
+  {
+    title: 'Open Source Projects',
+    link: '#openSource',
+    disabled: true
+  },  
   {
     title: 'Forum',
     link: '#forum',
